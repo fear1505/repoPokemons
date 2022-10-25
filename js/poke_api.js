@@ -55,8 +55,24 @@ function createFaceCard(pokemon){
   const card = document.createElement("div")
   card.classList.add("card")
 
+  const cardFace = document.createElement("div")
+  cardFace.classList.add("face")
+  cardFace.classList.add("front")
 
+  const cardContentImg = document.createElement("div")
+  cardContentImg.classList.add("card_container_img")
 
+  const imgCard = document.createElement("img")
+  imgCard.src = pokemon.img
+  
+  const titleCard = document.createElement("h3")
+  titleCard.classList.add("card_title")
+  titleCard.textContent = pokemon.name
+  
+  card.appendChild(cardFace)
+  cardFace.appendChild(cardContentImg)
+  cardContentImg.appendChild(imgCard)
+  cardFace.appendChild(titleCard)
   contentCards.appendChild(card)
   fragment.appendChild(contentCards)
   root.appendChild(fragment)
