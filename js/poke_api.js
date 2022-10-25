@@ -1,6 +1,12 @@
 let root = document.getElementById("root");
+const contentCards = document.createElement("div")
+contentCards.classList.add("content_cards")
 let fragment = document.createDocumentFragment();
 const url = "https://pokeapi.co/api/v2/pokemon";
+
+document.addEventListener("DOMContentLoaded", ()=>{
+  fetchPokemons()
+})
 
 function createHeader(){
   let header = document.createElement("header");
@@ -13,103 +19,56 @@ function createHeader(){
   header.appendChild(text);
 }
 
-function createFaceCard(data ,id , card){
-  let cardFace = document.createElement("div")
-  cardFace.classList.add("face")
-  cardFace.classList.add("front")
+const fetchPokemons = async () => {
+   try {
+    const res = await fetch(url)
+    const data = await res.json()
 
-  let containerImg = document.createElement("div");
-  containerImg.classList.add("card_container_img");
+    //console.log(data.results)
 
-  let imgPoke = document.createElement("img");
-  imgPoke.src = data.sprites.front_default;
-
-  let titlePoke = document.createElement("h2");
-  titlePoke.classList.add("card_title");
-  titlePoke.textContent = data.name[0].toUpperCase() + data.name.substring(1);
-
-  let btn = document.createElement("button");
-  btn.classList.add("btn");
-  btn.dataset.id = id;
-  btn.textContent = "DETALLE";
-
-  btn.addEventListener("click", () =>{
-    card.classList.add("active")
-  })
-
-  cardFace.appendChild(containerImg);
-  containerImg.appendChild(imgPoke);
-  cardFace.appendChild(titlePoke);
-  cardFace.appendChild(btn);
-  card.appendChild(cardFace)
-}
-
-function createBackCard(data, card){
-  let cardBack = document.createElement("div")
-  cardBack.classList.add("face")
-  cardBack.classList.add("back")
-
-  let pokeAbilities = document.createElement("h3")
-  pokeAbilities.textContent = `Habilidad: ${data.abilities[0].ability.name}`
-
-  let pokeExpe = document.createElement("h3")
-  pokeExpe.textContent = `Experiencia: ${data.base_experience}` 
-
-  let pokeweight = document.createElement("h3")
-  pokeweight.textContent = `Peso: ${data.weight}`
-
-  let pokeMove = document.createElement("h3")
-  pokeMove.textContent = `Movimiento: ${data.moves[0].move.name}` 
-
-  let btnBack = document.createElement("button")
-  btnBack.classList.add("btn_back")
-  btnBack.textContent = "REGRESAR"
-
-  btnBack.addEventListener("click", ()=>{
-    card.classList.remove("active")
-  })
-    
-  cardBack.appendChild(pokeAbilities)
-  cardBack.appendChild(pokeExpe)
-  cardBack.appendChild(pokeweight)
-  cardBack.appendChild(pokeMove)
-  cardBack.appendChild(btnBack)
-  card.appendChild(cardBack)
-}
-
-function getPokemons(){
-  fetch(url)
-  .then(res => res.json())
-  .then(data => {
-    let container = document.createElement("main");
-    container.classList.add("main");
-    
-    let containerCard = document.createElement("div")
-    containerCard.classList.add("content_cards")
-
-    for (const i of data.results) {
-      console.log(i.url)
-      fetch(i.url)
+    data.results.forEach(item =>{
+      fetch(item.url)
       .then(res => res.json())
-      .then(data => {
-        let card = document.createElement("div");
-        card.classList.add("card");
-        
-        let id = data.id;
-
-        createFaceCard(data, id, card)
-        createBackCard(data, card)
-
-        fragment.appendChild(containerCard);
-        containerCard.appendChild(card)
-        container.appendChild(fragment);
+      .then(data =>{
+        pokemon(data)
       })
-    }
-    root.appendChild(container);
-  })
+    })
+   } catch (error) {
+    console.log(error)
+  }
 }
 
-getPokemons()
+const pokemon = data =>{
+   //console.log(data)
+  const pokemon = {
+    img: data.sprites.front_default,
+    name: data.name,
+    exp: data.base_experience,
+    height: data.height,
+    weight: data.weight,
+    abilities: data.abilities[0].ability.name
+  }
+  createFaceCard(pokemon)
+}
+
+function createFaceCard(pokemon){  
+  const card = document.createElement("div")
+  card.classList.add("card")
+
+
+
+  contentCards.appendChild(card)
+  fragment.appendChild(contentCards)
+  root.appendChild(fragment)
+}
+
+function createBackCard(data){
+  
+}
+
+
+
+//getPokemons()
 createHeader()
 
 
