@@ -25,11 +25,8 @@ body{
     text-shadow: #e0e0e0 1px 1px 0;
 }
 
-.main{
-   background-color: whitesmoke;
-}
-
 .content_cards{
+    background-color: whitesmoke;
     display: grid;
     grid-template-columns: repeat(auto-fill, 200px);
     gap: 1em;
@@ -99,8 +96,14 @@ body{
     width: 100%;
 }
 
-.card_title{
-    margin: 3%;
+.container__price_title{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.card_title {
+    margin: 3% 0%;
     width: 60%;
     text-align: center;
     font-size: 1.6rem;
@@ -108,10 +111,20 @@ body{
     text-shadow: #474747 3px 5px 2px;
 }
 
+.precio{
+}
+
+.container__btn{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
 .btn{
     margin-top: auto;
-    width: 100px;
-    height: 40px;
+    padding: 1%;
+    width: 45%;
+    height: 30px;
     font-size: 1rem;
     border: 1px solid;
     border-radius: 10px;
