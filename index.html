@@ -9,6 +9,54 @@
 </head>
 <body>
     <div id="root"></div>
+    <section class="carrito">
+        <h2>Carrito de Compras</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Item</th>
+                    <th>Cantidad</th>
+                    <th>Acción</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody id="productos"></tbody>
+            <tfoot>
+                <tr id="footer">
+                  <th scope="row" colspan="5">Carrito vacío - comience a comprar!</th>
+                </tr>
+              </tfoot>
+        </table>
+    </section>
+    
+    <template id="template-carrito">
+        <tr>
+          <th>id</th>
+          <td>Café</td>
+          <td>1</td>
+          <td>
+              <button class="btn-aumentar">
+                  +
+              </button>
+              <button class="btn-disminuir">
+                  -
+              </button>
+          </td>
+          <td>$ <span>500</span></td>
+        </tr>
+    </template>
+
+    <template id="template-footer">
+        <th scope="row" colspan="2">Total productos</th>
+        <td>10</td>
+        <td>
+            <button class="btn" id="vaciar-carrito">
+                vaciar todo
+            </button>
+        </td>
+        <td>$ <span>5000</span></td>
+    </template>
     <script src="/js/poke_api.js"></script>
 </body>
 </html>

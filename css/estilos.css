@@ -8,6 +8,7 @@
 body{
     margin: 0%;
     padding: 0px;
+    background-color: whitesmoke;
 }
 
 .header{
@@ -15,7 +16,7 @@ body{
     border: 1px solid;
 }
 
-.text_header{
+.header__text{
     margin: 0%;
     padding: 2%;
     font-size: 2.5rem;
@@ -25,7 +26,7 @@ body{
     text-shadow: #e0e0e0 1px 1px 0;
 }
 
-.content_cards{
+.contenedor_cards{
     background-color: whitesmoke;
     display: grid;
     grid-template-columns: repeat(auto-fill, 200px);
@@ -35,12 +36,12 @@ body{
     perspective: 5000px;
 }
 @media(min-width:575px){
-    .content_cards{
+    .contenedor_cards{
         grid-template-columns: repeat(auto-fill, 250px);
     }
 }
 
-.card{
+.contenedor_cards__card{
     width: 100%;
     height: 200px;
     background-color: rgb(183, 199, 224);
@@ -52,21 +53,21 @@ body{
     box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.39);
 }
 
-.card:hover{
+.contenedor_cards__card:hover{
     box-shadow: 0px 10px 13px -7px #000000, 0px 0px 30px 0px rgba(0,0,0,0);
 }
 
 @media(min-width:575px){
-    .card{
+    .contenedor_cards__card{
         height: 250px;
     }
 }
 
-.card.active{
+.contenedor_cards__card.active{
     transform: rotateY(180deg);
 } 
 
-.face{
+.contenedor_cards__card__cara{
     width: 100%;
     height: 100%;
     position: absolute;
@@ -74,7 +75,7 @@ body{
     backface-visibility: hidden;
 }
 
-.front{
+.contenedor_cards__card__frontal{
    width: 100%;
    padding: 2%;
    display: flex;
@@ -84,7 +85,7 @@ body{
    background: linear-gradient(135deg, #6ECEAD 0%, #7E8AA4 68%, #9991C5 100%);
 } 
 
-.card_container_img{
+.contenedor_cards__card__frontal__img{
     width: 60%;
     border: 1px solid;
     border-radius:30% 70% 28% 72% / 37% 50% 50% 63% ;
@@ -92,17 +93,18 @@ body{
     background: radial-gradient(ellipse at center, #FFFFFE 0%, #CBD7D7 75%, #CDCDCD 100%);
 }
 
-.card_container_img img{
+.contenedor_cards__card__frontal__img img{
     width: 100%;
 }
 
-.container__price_title{
+.contenedor_cards__card__frontal__titulo_precio{
     width: 100%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
+    align-items: center;
 }
 
-.card_title {
+.contenedor_cards__card__frontal__titulo_precio__h3{
     margin: 3% 0%;
     width: 60%;
     text-align: center;
@@ -111,8 +113,14 @@ body{
     text-shadow: #474747 3px 5px 2px;
 }
 
+.contenedor_cards__card__frontal__titulo_precio__precio{
+    margin: 0%;
+    padding: 0% 2%;
+    font-size: 1.4rem;
+    color: gainsboro;
+}
 
-.container__btn{
+.contenedor_cards__card__frontal__btn{
     width: 100%;
     display: flex;
     justify-content: space-evenly;
@@ -137,7 +145,7 @@ body{
     text-shadow: #eee7e7 3px 5px 2px;
 }
 
-.back{
+.contenedor_cards__card__espalda{
    transform: rotateY(180deg);
    width: 100%;
    padding: 2%;
@@ -148,7 +156,7 @@ body{
    background: linear-gradient(to right, #6ECEAD 0%, #7E8AA4 55%, #9991C5 100%);
 }
 
-.back h3{
+.contenedor_cards__card__espalda h3{
     margin: 2%;
     text-align: center;
     border: 1px solid black;
@@ -158,7 +166,7 @@ body{
     text-shadow: #474747 3px 5px 2px;
 }
 
-.btn_back{
+.contenedor_cards__card__espalda__btn{
     width: 100px;
     height: 40px;
     font-size: 1rem;
@@ -170,8 +178,61 @@ body{
     text-shadow: #474747 3px 5px 2px;
 } 
 
-.btn_back:hover{
+.contenedor_cards__card__espalda__btn:hover{
     background: #FFFFFF;
     color: #584d4df5 ;
     text-shadow: #eee7e7 3px 5px 2px;
+}
+
+.carrito{
+    padding: 1%;
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.carrito h2{
+    margin: 0%;
+    font-size: 2.3rem;
+} 
+
+.table{
+    width: 90%;
+    text-align: center;
+    margin: 0% auto;
+}
+
+.table thead{
+    font-size: 1.6rem;
+}
+
+.table tbody{
+    font-size: 1.2rem;
+}
+
+th, td{
+    border-bottom: 1px solid;
+    border-spacing: 0;
+}
+
+#footer th{
+    font-size: 1.2rem;
+}
+
+.btn-aumentar{
+    background-color: #2795a3;
+    color: white;
+    border: 5px solid #2795a3;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.btn-disminuir{
+    background-color: red;
+    color: white;
+    border: 5px solid red;
+    border-radius: 5px;
+    font-size: 1rem;
 }

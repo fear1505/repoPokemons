@@ -1,20 +1,29 @@
 let root = document.getElementById("root");
-const contentCards = document.createElement("div")
-contentCards.classList.add("content_cards")
+const contenedorCard = document.createElement("div")
+contenedorCard.classList.add("contenedor_cards")
+const productos = document.getElementById("productos")
 let fragment = document.createDocumentFragment();
 const url = "https://pokeapi.co/api/v2/pokemon";
 
-const carrito = []
+let carrito = []
 
 document.addEventListener("DOMContentLoaded", ()=>{
   fetchPokemons()
 })
 
-function createHeader(){
+contenedorCard.addEventListener("click", e =>{
+  agregarAlCarrito(e)
+})
+
+productos.addEventListener("click", (e)=>{
+    btnAccion(e)
+})
+
+function crearHeader(){
   let header = document.createElement("header");
   header.classList.add("header");
   let text = document.createElement("h1");
-  text.classList.add("text_header");
+  text.classList.add("header__text");
   text.textContent = "POKEMONS";
   
   root.appendChild(header);
@@ -25,8 +34,6 @@ const fetchPokemons = async () => {
    try {
     const res = await fetch(url)
     const data = await res.json()
-
-    //console.log(data.results)
 
     data.results.forEach(item =>{
       fetch(item.url)
@@ -41,117 +48,228 @@ const fetchPokemons = async () => {
 }
 
 const pokemon = data =>{
-   //console.log(data)
   const pokemon = {
     img: data.sprites.front_default,
     name: data.name,
     exp: data.base_experience,
+    precio: parseInt(data.base_experience),
     height: data.height,
     weight: data.weight,
     abilities: data.abilities[0].ability.name,
     id: data.id
   }
   const card = document.createElement("div")
-  card.classList.add("card")
-  createFaceCard(pokemon, card)
-  createBackCard(pokemon, card)
+  card.classList.add("contenedor_cards__card")
+  card.id = pokemon.id
+  crearCardFrontal(pokemon, card)
+  crearCardTrasera(pokemon, card)
 }
 
-function createFaceCard(pokemon, card){  
-  //console.log(pokemon)
+function crearCardFrontal(pokemon, card){  
+  const cardFrontal = document.createElement("div")
+  cardFrontal.classList.add("contenedor_cards__card__cara")
+  cardFrontal.classList.add("contenedor_cards__card__frontal")
 
-  const cardFace = document.createElement("div")
-  cardFace.classList.add("face")
-  cardFace.classList.add("front")
-
-  const cardContentImg = document.createElement("div")
-  cardContentImg.classList.add("card_container_img")
+  const contenedorImg = document.createElement("div")
+  contenedorImg.classList.add("contenedor_cards__card__frontal__img")
 
   const imgCard = document.createElement("img")
   imgCard.src = pokemon.img
+
+  const contenedorTituloPrecio = document.createElement("div")
+  contenedorTituloPrecio.classList.add("contenedor_cards__card__frontal__titulo_precio")
   
-  const titleCard = document.createElement("h3")
-  titleCard.classList.add("card_title")
-  titleCard.textContent = pokemon.name
+  const titiloCard = document.createElement("h3")
+  titiloCard.classList.add("contenedor_cards__card__frontal__titulo_precio__h3")
+  titiloCard.textContent = pokemon.name
 
-  const price = document.createElement("p")
-  price.classList.add("precio")
-  price.textContent = `$ ${pokemon.exp}`
+  const precio = document.createElement("p")
+  precio.classList.add("contenedor_cards__card__frontal__titulo_precio__precio")
+  precio.textContent = pokemon.precio
 
-  const contentBtn = document.createElement("div")
-  contentBtn.classList.add("container__btn")
+  const contenedorBtn = document.createElement("div")
+  contenedorBtn.classList.add("contenedor_cards__card__frontal__btn")
 
-  const btnDetail = document.createElement("button")
-  btnDetail.classList.add("btn")
-  btnDetail.textContent = "DETALLE"
-  btnDetail.dataset.id = pokemon.id
+  const detalleBtn = document.createElement("button")
+  detalleBtn.classList.add("btn")
+  detalleBtn.textContent = "DETALLE"
+  detalleBtn.dataset.id = pokemon.id
 
-  const btnCarrito  = document.createElement("button")
-  btnCarrito.classList.add("btn")
-  btnCarrito.textContent = "COMPRAR"
+  const carritoBtn  = document.createElement("button")
+  carritoBtn.classList.add("btn")
+  carritoBtn.id = pokemon.id
+  carritoBtn.textContent = "COMPRAR"
   
-  card.appendChild(cardFace)
-  cardFace.appendChild(cardContentImg)
-  cardContentImg.appendChild(imgCard)
-  cardFace.appendChild(titleCard)
-  cardFace.appendChild(contentBtn)
-  contentBtn.appendChild(btnCarrito)
-  contentBtn.appendChild(btnDetail)
-  contentCards.appendChild(card)
-  fragment.appendChild(contentCards)
+  card.appendChild(cardFrontal)
+  cardFrontal.appendChild(contenedorImg)
+  contenedorImg.appendChild(imgCard)
+  cardFrontal.appendChild(contenedorTituloPrecio)
+  contenedorTituloPrecio.appendChild(titiloCard)
+  contenedorTituloPrecio.append(precio)
+  cardFrontal.appendChild(contenedorBtn)
+  contenedorBtn.appendChild(carritoBtn)
+  contenedorBtn.appendChild(detalleBtn)
+  contenedorCard.appendChild(card)
+  fragment.appendChild(contenedorCard)
   root.appendChild(fragment)
-
-  cardFace.addEventListener("click", e =>{
-    if(e.target.dataset.id === btnDetail.dataset.id){
+  
+  cardFrontal.addEventListener("click", e =>{
+    if(e.target.dataset.id === detalleBtn.dataset.id){
       card.classList.add("active")
     }
   })
+
 }
 
-function createBackCard(pokemon, card){
-  //console.log(data,card)
-  const cardBack = document.createElement("div")
-  cardBack.classList.add("back")
-  cardBack.classList.add("face")
+function crearCardTrasera(pokemon, card){
+  const cardEspalda = document.createElement("div")
+  cardEspalda.classList.add("contenedor_cards__card__espalda")
+  cardEspalda.classList.add("contenedor_cards__card__cara")
 
-  const pokeName = document.createElement("h3")
-  pokeName.textContent = `Nombre: ${pokemon.name}`
+  const pokeNombre = document.createElement("h3")
+  pokeNombre.textContent = `Nombre: ${pokemon.name}`
 
   const pokeExp = document.createElement("h3")
   pokeExp.textContent = `Experiencia: ${pokemon.exp}`
 
-  const pokeHeight = document.createElement("h3")
-  pokeHeight.textContent = `Altura: ${pokemon.height}cm`
+  const pokeAltura = document.createElement("h3")
+  pokeAltura.textContent = `Altura: ${pokemon.height}cm`
 
-  const pokeWeight = document.createElement("h3")
-  pokeWeight.textContent = `Peso: ${pokemon.weight}kg`
+  const pokePeso = document.createElement("h3")
+  pokePeso.textContent = `Peso: ${pokemon.weight}kg`
 
-  const pokeAbilities = document.createElement("h3")
-  pokeAbilities.textContent = `Habilidad: ${pokemon.abilities}`
+  const pokeHabilidad = document.createElement("h3")
+  pokeHabilidad.textContent = `Habilidad: ${pokemon.abilities}`
   
-  const btnReturn = document.createElement("button")
-  btnReturn.dataset.id = pokemon.id
-  btnReturn.classList.add("btn_back")
-  btnReturn.textContent = "REGRESAR"
+  const regresarBtn = document.createElement("button")
+  regresarBtn.dataset.id = pokemon.id
+  regresarBtn.classList.add("contenedor_cards__card__espalda__btn")
+  regresarBtn.textContent = "REGRESAR"
 
-  card.appendChild(cardBack)
-  cardBack.appendChild(pokeName)
-  cardBack.appendChild(pokeExp)
-  cardBack.appendChild(pokeHeight)
-  cardBack.appendChild(pokeWeight)
-  cardBack.appendChild(pokeAbilities)
-  cardBack.appendChild(btnReturn)
-  contentCards.appendChild(card)
-  fragment.appendChild(contentCards)
+  card.appendChild(cardEspalda)
+  cardEspalda.appendChild(pokeNombre)
+  cardEspalda.appendChild(pokeExp)
+  cardEspalda.appendChild(pokeAltura)
+  cardEspalda.appendChild(pokePeso)
+  cardEspalda.appendChild(pokeHabilidad)
+  cardEspalda.appendChild(regresarBtn)
+  contenedorCard.appendChild(card)
+  fragment.appendChild(contenedorCard)
   root.appendChild(fragment)
 
-  cardBack.addEventListener("click", e =>{
-    if(e.target.dataset.id === btnReturn.dataset.id){
+  cardEspalda.addEventListener("click", e =>{
+    if(e.target.dataset.id === regresarBtn.dataset.id){
       card.classList.remove("active")
     }
   })
 }
 
-createHeader()
+const agregarAlCarrito = (e) => {
+  if(e.target.textContent === "COMPRAR"){
+    setcarrito(e.target.parentElement.parentElement)
+  }
+}
+
+const setcarrito = (e) => {
+
+  const producto = {
+    id: e.querySelector(".btn").id,
+    nombre: e.querySelector('.contenedor_cards__card__frontal__titulo_precio__h3').textContent,
+    precio: parseInt(e.querySelector(".contenedor_cards__card__frontal__titulo_precio__precio").textContent),
+    cantidad: 1
+  }
+  
+  const index = carrito.findIndex(item =>{
+    return item.id === producto.id
+  })
+
+  if(index === -1){
+    carrito.push(producto)
+  }else{
+    carrito[index].cantidad++
+  }
+
+  pintarCarrito()
+}
+
+const pintarCarrito = () =>{
+  //console.log(carritoArray)
+  const template = document.querySelector("#template-carrito").content
+  productos.innerHTML = ``
+  
+  carrito.forEach((item)=>{
+    template.querySelector("th").textContent = item.id
+    template.querySelectorAll("td")[0].textContent = item.nombre
+    template.querySelectorAll("td")[1].textContent = item.cantidad
+    template.querySelector("span").textContent =  item.cantidad * item.precio
+    template.querySelector(".btn-aumentar").dataset.id = item.id
+    template.querySelector(".btn-disminuir").dataset.id = item.id
+    const clone = template.cloneNode(true)
+    fragment.appendChild(clone)
+  })
+  productos.appendChild(fragment)
+  pintarFooter()
+}
+
+const pintarFooter = () =>{
+  const footer = document.querySelector("#footer")
+  const templateFooter = document.querySelector("#template-footer").content
+  footer.innerHTML = ``
+
+  if(carrito.length === 0){
+    footer.innerHTML = `
+      <th scope="row" colspan="5">Carrito vacío - comience a comprar!</th>
+    `
+    return
+  }
+
+  const nCantidad = carrito.reduce((acc, item) =>{
+    return acc + item.cantidad
+  }, 0)
+
+  const nPrecio = carrito.reduce((acc , item)=>{
+    return acc + item.cantidad * item.precio
+  }, 0)
+
+  
+  templateFooter.querySelectorAll("td")[0].textContent = nCantidad
+  templateFooter.querySelector("span").textContent = nPrecio
+  const clone = templateFooter.cloneNode(true)
+  fragment.appendChild(clone)
+  footer.appendChild(fragment)
+
+  const vaciarCarrito = document.getElementById("vaciar-carrito")
+  vaciarCarrito.addEventListener("click", ()=>{
+    carrito = []
+    pintarCarrito()
+  })
+}
+
+const btnAccion = e =>{
+  if(e.target.classList.contains("btn-aumentar")){
+    carrito.forEach(item=>{
+      if(item.id === e.target.dataset.id){
+        item.cantidad++
+        pintarCarrito()
+      }
+    })
+  }
+  
+  if(e.target.classList.contains("btn-disminuir")){
+    carrito.forEach(item=>{
+      if(item.id === e.target.dataset.id){
+        item.cantidad--  
+        console.log(item)
+      }
+      if(item.cantidad === 0){
+        const indice = carrito.findIndex(i =>{return i.id === item.id})
+        carrito.splice(indice, 1)
+      } 
+    pintarCarrito()
+    })
+  }
+}
+
+crearHeader()
 
 
