@@ -193,7 +193,6 @@ const setcarrito = (e) => {
 }
 
 const pintarCarrito = () =>{
-  //console.log(carritoArray)
   const template = document.querySelector("#template-carrito").content
   productos.innerHTML = ``
   
@@ -259,7 +258,6 @@ const btnAccion = e =>{
     carrito.forEach(item=>{
       if(item.id === e.target.dataset.id){
         item.cantidad--  
-        console.log(item)
       }
       if(item.cantidad === 0){
         const indice = carrito.findIndex(i =>{return i.id === item.id})
