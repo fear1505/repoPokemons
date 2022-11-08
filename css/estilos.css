@@ -204,12 +204,17 @@ body{
     margin: 0% auto;
 }
 
-.table thead{
-    font-size: 1.6rem;
-}
 
-.table tbody{
-    font-size: 1.2rem;
+@media(min-width:560px){
+    .table thead{
+        font-size: 1.6rem;
+    }
+    .table tbody{
+        font-size: 1.2rem;
+    }
+    #footer th{
+        font-size: 1.2rem;
+    }
 }
 
 th, td{
@@ -217,9 +222,6 @@ th, td{
     border-spacing: 0;
 }
 
-#footer th{
-    font-size: 1.2rem;
-}
 
 .btn-aumentar{
     background-color: #2795a3;
