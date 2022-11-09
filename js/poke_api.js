@@ -65,7 +65,7 @@ function crearHeader(){
 
   let logoCarrito = document.createElement("img")
   logoCarrito.classList.add("header__logo")
-  logoCarrito.src = "/img/compra.png"
+  logoCarrito.src = "./img/compra.png"
 
   let contadorCarrito = document.createElement("p")
   contadorCarrito.classList.add("header__contador")
