@@ -6,7 +6,6 @@ let fragment = document.createDocumentFragment();
 const url = "https://pokeapi.co/api/v2/pokemon";
 
 let carrito = []
-
 document.addEventListener("DOMContentLoaded", ()=>{
   fetchPokemons()
 })
@@ -19,16 +18,6 @@ productos.addEventListener("click", (e)=>{
     btnAccion(e)
 })
 
-function crearHeader(){
-  let header = document.createElement("header");
-  header.classList.add("header");
-  let text = document.createElement("h1");
-  text.classList.add("header__text");
-  text.textContent = "POKEMONS";
-  
-  root.appendChild(header);
-  header.appendChild(text);
-}
 
 const fetchPokemons = async () => {
    try {
@@ -63,6 +52,31 @@ const pokemon = data =>{
   card.id = pokemon.id
   crearCardFrontal(pokemon, card)
   crearCardTrasera(pokemon, card)
+}
+
+function crearHeader(){
+  let header = document.createElement("header");
+  header.classList.add("header");
+  let text = document.createElement("h1");
+  text.classList.add("header__text");
+  text.textContent = "POKEMONS";
+
+  let divHeader = document.createElement("div")
+
+  let logoCarrito = document.createElement("img")
+  logoCarrito.classList.add("header__logo")
+  logoCarrito.src = "/img/compra.png"
+
+  let contadorCarrito = document.createElement("p")
+  contadorCarrito.classList.add("header__contador")
+  contadorCarrito.textContent = "0"
+  
+  header.appendChild(text);
+  divHeader.appendChild(logoCarrito)
+  divHeader.appendChild(contadorCarrito)
+  header.appendChild(divHeader)
+  root.appendChild(header);
+  
 }
 
 function crearCardFrontal(pokemon, card){  
@@ -194,6 +208,7 @@ const setcarrito = (e) => {
 
 const pintarCarrito = () =>{
   const template = document.querySelector("#template-carrito").content
+  document.querySelector(".header__contador").textContent = carrito.length
   productos.innerHTML = ``
   
   carrito.forEach((item)=>{
@@ -208,6 +223,7 @@ const pintarCarrito = () =>{
   })
   productos.appendChild(fragment)
   pintarFooter()
+  
 }
 
 const pintarFooter = () =>{
@@ -229,7 +245,6 @@ const pintarFooter = () =>{
   const nPrecio = carrito.reduce((acc , item)=>{
     return acc + item.cantidad * item.precio
   }, 0)
-
   
   templateFooter.querySelectorAll("td")[0].textContent = nCantidad
   templateFooter.querySelector("span").textContent = nPrecio
