@@ -1,4 +1,5 @@
 let root = document.getElementById("root");
+let seccionCarrito = document.querySelector(".carrito")
 const contenedorCard = document.createElement("div")
 contenedorCard.classList.add("contenedor_cards")
 const productos = document.getElementById("productos")
@@ -15,9 +16,8 @@ contenedorCard.addEventListener("click", e =>{
 })
 
 productos.addEventListener("click", (e)=>{
-    btnAccion(e)
+  btnAccion(e)
 })
-
 
 const fetchPokemons = async () => {
    try {
@@ -61,7 +61,7 @@ function crearHeader(){
   text.classList.add("header__text");
   text.textContent = "POKEMONS";
 
-  let divHeader = document.createElement("div")
+  let divHeader = document.createElement("a")
 
   let logoCarrito = document.createElement("img")
   logoCarrito.classList.add("header__logo")
@@ -76,7 +76,16 @@ function crearHeader(){
   divHeader.appendChild(contadorCarrito)
   header.appendChild(divHeader)
   root.appendChild(header);
+
+  divHeader.addEventListener("click", e =>{
+    seccionCarrito.classList.add("carrito_activo")
+    contenedorCard.classList.add("inactivo")
+  })
   
+  text.addEventListener("click", e =>{
+    seccionCarrito.classList.remove("carrito_activo")
+    contenedorCard.classList.remove("inactivo")
+  })
 }
 
 function crearCardFrontal(pokemon, card){  
