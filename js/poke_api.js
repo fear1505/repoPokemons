@@ -5,6 +5,7 @@ contenedorCard.classList.add("contenedor_cards")
 const productos = document.getElementById("productos")
 let fragment = document.createDocumentFragment();
 const url = "https://pokeapi.co/api/v2/pokemon";
+location.hash = "#productos"
 
 let carrito = []
 document.addEventListener("DOMContentLoaded", ()=>{
@@ -17,6 +18,17 @@ contenedorCard.addEventListener("click", e =>{
 
 productos.addEventListener("click", (e)=>{
   btnAccion(e)
+})
+
+window.addEventListener("hashchange", e =>{
+  seccionCarrito.classList.remove("carrito_activo")
+  contenedorCard.classList.add("inactivo")
+  switch(location.hash){
+    case "#productos": contenedorCard.classList.remove("inactivo")
+    break
+    case "#carrito": seccionCarrito.classList.add("carrito_activo")
+    break
+  }
 })
 
 const fetchPokemons = async () => {
@@ -78,11 +90,13 @@ function crearHeader(){
   root.appendChild(header);
 
   divHeader.addEventListener("click", e =>{
+    location.hash = "#carrito"
     seccionCarrito.classList.add("carrito_activo")
     contenedorCard.classList.add("inactivo")
   })
   
   text.addEventListener("click", e =>{
+    location.hash = "#productos"
     seccionCarrito.classList.remove("carrito_activo")
     contenedorCard.classList.remove("inactivo")
   })
