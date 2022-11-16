@@ -1,7 +1,7 @@
 let root = document.getElementById("root");
 let seccionCarrito = document.querySelector(".carrito")
 const contenedorCard = document.createElement("div")
-contenedorCard.classList.add("contenedor_cards")
+contenedorCard.classList.add("contenedor")
 const productos = document.getElementById("productos")
 let fragment = document.createDocumentFragment();
 const url = "https://pokeapi.co/api/v2/pokemon";
@@ -60,7 +60,7 @@ const pokemon = data =>{
     id: data.id
   }
   const card = document.createElement("div")
-  card.classList.add("contenedor_cards__card")
+  card.classList.add("contenedor__card")
   card.id = pokemon.id
   crearCardFrontal(pokemon, card)
   crearCardTrasera(pokemon, card)
@@ -69,24 +69,28 @@ const pokemon = data =>{
 function crearHeader(){
   let header = document.createElement("header");
   header.classList.add("header");
-  let text = document.createElement("h1");
-  text.classList.add("header__text");
-  text.textContent = "POKEMONS";
+
+  let contentLogo = document.createElement("div")
+  contentLogo.classList.add("header__home");
+
+  let text = document.createElement("img");
+  text.src = "./img/poke-logo.png"
 
   let divHeader = document.createElement("a")
 
   let logoCarrito = document.createElement("img")
-  logoCarrito.classList.add("header__logo")
+  logoCarrito.classList.add("header__carrito")
   logoCarrito.src = "./img/compra.png"
 
   let contadorCarrito = document.createElement("p")
   contadorCarrito.classList.add("header__contador")
   contadorCarrito.textContent = "0"
   
-  header.appendChild(text);
+  header.appendChild(contentLogo);
+  header.appendChild(divHeader)
+  contentLogo.appendChild(text)
   divHeader.appendChild(logoCarrito)
   divHeader.appendChild(contadorCarrito)
-  header.appendChild(divHeader)
   root.appendChild(header);
 
   divHeader.addEventListener("click", e =>{
@@ -104,28 +108,29 @@ function crearHeader(){
 
 function crearCardFrontal(pokemon, card){  
   const cardFrontal = document.createElement("div")
-  cardFrontal.classList.add("contenedor_cards__card__cara")
-  cardFrontal.classList.add("contenedor_cards__card__frontal")
+  cardFrontal.classList.add("contenedor__card__cara")
+  cardFrontal.classList.add("contenedor__card__frente")
 
   const contenedorImg = document.createElement("div")
-  contenedorImg.classList.add("contenedor_cards__card__frontal__img")
+  contenedorImg.classList.add("contenedor__card__frente__img")
 
   const imgCard = document.createElement("img")
   imgCard.src = pokemon.img
 
+  const contenedorTituloPrecioBtn = document.createElement("div")
+  contenedorTituloPrecioBtn.classList.add("contenedor__card__frente__tpb")
+
   const contenedorTituloPrecio = document.createElement("div")
-  contenedorTituloPrecio.classList.add("contenedor_cards__card__frontal__titulo_precio")
+  contenedorTituloPrecio.classList.add("contenedor__card__frente__tpb__titulo_precio")
   
   const titiloCard = document.createElement("h3")
-  titiloCard.classList.add("contenedor_cards__card__frontal__titulo_precio__h3")
   titiloCard.textContent = pokemon.name
 
   const precio = document.createElement("p")
-  precio.classList.add("contenedor_cards__card__frontal__titulo_precio__precio")
   precio.textContent = pokemon.precio
 
   const contenedorBtn = document.createElement("div")
-  contenedorBtn.classList.add("contenedor_cards__card__frontal__btn")
+  contenedorBtn.classList.add("contenedor__card__frente__btn")
 
   const detalleBtn = document.createElement("button")
   detalleBtn.classList.add("btn")
@@ -140,10 +145,11 @@ function crearCardFrontal(pokemon, card){
   card.appendChild(cardFrontal)
   cardFrontal.appendChild(contenedorImg)
   contenedorImg.appendChild(imgCard)
-  cardFrontal.appendChild(contenedorTituloPrecio)
+  cardFrontal.appendChild(contenedorTituloPrecioBtn)
   contenedorTituloPrecio.appendChild(titiloCard)
   contenedorTituloPrecio.append(precio)
-  cardFrontal.appendChild(contenedorBtn)
+  contenedorTituloPrecioBtn.appendChild(contenedorTituloPrecio)
+  contenedorTituloPrecioBtn.appendChild(contenedorBtn)
   contenedorBtn.appendChild(carritoBtn)
   contenedorBtn.appendChild(detalleBtn)
   contenedorCard.appendChild(card)
@@ -160,8 +166,8 @@ function crearCardFrontal(pokemon, card){
 
 function crearCardTrasera(pokemon, card){
   const cardEspalda = document.createElement("div")
-  cardEspalda.classList.add("contenedor_cards__card__espalda")
-  cardEspalda.classList.add("contenedor_cards__card__cara")
+  cardEspalda.classList.add("contenedor__card__espalda")
+  cardEspalda.classList.add("contenedor__card__cara")
 
   const pokeNombre = document.createElement("h3")
   pokeNombre.textContent = `Nombre: ${pokemon.name}`
@@ -180,7 +186,7 @@ function crearCardTrasera(pokemon, card){
   
   const regresarBtn = document.createElement("button")
   regresarBtn.dataset.id = pokemon.id
-  regresarBtn.classList.add("contenedor_cards__card__espalda__btn")
+  regresarBtn.classList.add("contenedor__card__espalda__btn")
   regresarBtn.textContent = "REGRESAR"
 
   card.appendChild(cardEspalda)
@@ -211,8 +217,8 @@ const setcarrito = (e) => {
 
   const producto = {
     id: e.querySelector(".btn").id,
-    nombre: e.querySelector('.contenedor_cards__card__frontal__titulo_precio__h3').textContent,
-    precio: parseInt(e.querySelector(".contenedor_cards__card__frontal__titulo_precio__precio").textContent),
+    nombre: e.querySelector('.contenedor__card__frente__tpb__titulo_precio h3').textContent,
+    precio: parseInt(e.querySelector(".contenedor__card__frente__tpb__titulo_precio p").textContent),
     cantidad: 1
   }
   
