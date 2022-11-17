@@ -16,9 +16,7 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #616161;
-    background: #bababa;
-    text-shadow: #e0e0e0 1px 1px 0;
+    background: #ff0000;
     border: 1px solid;
 }
 
@@ -168,8 +166,8 @@ body{
     font-weight: bold;
     border: 1px solid;
     border-radius: 10px;
-    color: #ff0000;
-    background-color: #FFFFFF;
+    color: #FFCB05;
+    background-color: #3958A1;
 }
 
 .btn:hover{
@@ -184,8 +182,8 @@ body{
    display: flex;
    flex-direction: column;
    justify-content: center;
-   background: #6ECEAD;
-   background: linear-gradient(to right, #6ECEAD 0%, #7E8AA4 55%, #9991C5 100%);
+   background-image: linear-gradient(to bottom, #ff0000, #eb2c25, #d43f39, #bb4d49, #a05755, #9e6669, #9a747a, #948387, #aa9fa4, #c1bbc0, #dad9dc, #f6f6f6);
+   border-radius: 10px;
 }
 
 .contenedor__card__espalda h3{
@@ -193,9 +191,8 @@ body{
     text-align: center;
     border: 1px solid black;
     border-radius: 10px;
-    color: #FFFFFF;
-    background: #2795a3;
-    text-shadow: #474747 3px 5px 2px;
+    color: #3958A1;
+    background-color: #FFFFFF;
 }
 
 .contenedor__card__espalda__btn{
@@ -205,20 +202,17 @@ body{
     border: 1px solid;
     border-radius: 10px;
     margin:  0% auto;
-    color: #FFFFFF;
-    background: #584d4d80;
-    text-shadow: #474747 3px 5px 2px;
+    color: #FFCB05;
+    background: #3958A1;
 } 
 
 .contenedor__card__espalda__btn:hover{
-    background: #FFFFFF;
-    color: #584d4df5 ;
-    text-shadow: #eee7e7 3px 5px 2px;
+    background: #ff0000;
+    color: #FFFFFF ;
 }
 
 .carrito{
     display: none;
-    padding: 1%;
     background-color: whitesmoke;
     flex-direction: column;
     justify-content: center;
@@ -235,7 +229,8 @@ body{
 } 
 
 .table{
-    width: 90%;
+    width: 100%;
+    padding: 0.5%;
     text-align: center;
     margin: 0% auto;
 }
@@ -253,11 +248,16 @@ body{
     }
 }
 
+
 th, td{
     border-bottom: 1px solid;
     border-spacing: 0;
 }
 
+.content_btn{
+    display: flex;
+    justify-content: space-evenly;
+}
 
 .btn-aumentar{
     background-color: #2795a3;
@@ -273,4 +273,24 @@ th, td{
     border: 5px solid red;
     border-radius: 5px;
     font-size: 1rem;
+}
+
+@media(min-width:560px){
+    .btn-aumentar{
+        width: 40%;
+        height: 40px;
+        font-size: 1.7rem;
+        text-align: center;
+    }
+    .btn-disminuir{
+        width: 40%;
+        height: 40px;
+        font-size: 1.7rem;
+        text-align: center;
+    }
+}
+
+td .btn{
+  width: 100%;
+  height: 50px;
 }

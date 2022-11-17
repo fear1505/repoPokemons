@@ -214,14 +214,13 @@ const agregarAlCarrito = (e) => {
 }
 
 const setcarrito = (e) => {
-
   const producto = {
     id: e.querySelector(".btn").id,
+    img: e.parentElement.querySelector(".contenedor__card__frente__img img").src,
     nombre: e.querySelector('.contenedor__card__frente__tpb__titulo_precio h3').textContent,
     precio: parseInt(e.querySelector(".contenedor__card__frente__tpb__titulo_precio p").textContent),
     cantidad: 1
   }
-  
   const index = carrito.findIndex(item =>{
     return item.id === producto.id
   })
@@ -242,8 +241,9 @@ const pintarCarrito = () =>{
   
   carrito.forEach((item)=>{
     template.querySelector("th").textContent = item.id
-    template.querySelectorAll("td")[0].textContent = item.nombre
-    template.querySelectorAll("td")[1].textContent = item.cantidad
+    template.querySelectorAll("td img")[0].src = item.img
+    template.querySelectorAll("td")[1].textContent = item.nombre
+    template.querySelectorAll("td")[2].textContent = item.cantidad
     template.querySelector("span").textContent =  item.cantidad * item.precio
     template.querySelector(".btn-aumentar").dataset.id = item.id
     template.querySelector(".btn-disminuir").dataset.id = item.id
