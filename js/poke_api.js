@@ -4,12 +4,12 @@ const contenedorCard = document.createElement("div")
 contenedorCard.classList.add("contenedor")
 const productos = document.getElementById("productos")
 let fragment = document.createDocumentFragment();
-const url = "https://pokeapi.co/api/v2/pokemon";
+let url = "https://pokeapi.co/api/v2/pokemon";
 location.hash = "#productos"
 
 let carrito = []
 document.addEventListener("DOMContentLoaded", ()=>{
-  fetchPokemons()
+  fetchPokemons(url)
 })
 
 contenedorCard.addEventListener("click", e =>{
@@ -31,10 +31,14 @@ window.addEventListener("hashchange", e =>{
   }
 })
 
-const fetchPokemons = async () => {
-   try {
+const fetchPokemons = async (url) => {
+  try{
     const res = await fetch(url)
     const data = await res.json()
+    
+    let next = data.next
+    const previous = data.previous
+    paginacion(next, previous)
 
     data.results.forEach(item =>{
       fetch(item.url)
@@ -64,6 +68,47 @@ const pokemon = data =>{
   card.id = pokemon.id
   crearCardFrontal(pokemon, card)
   crearCardTrasera(pokemon, card)
+}
+
+const paginacion = (next, previous) => {
+  const divPaginacion = document.createElement("div")
+  divPaginacion.classList.add("paginacion") 
+
+  const btnNext = document.createElement("button")
+  btnNext.textContent = "Siguiente"
+  btnNext.classList.add("siguiente")
+
+  const btnPrev = document.createElement("button")
+  btnPrev.textContent = "Anterior"
+  btnPrev.classList.add("anterior")
+  btnPrev.disabled = true
+
+  divPaginacion.appendChild(btnNext)
+  divPaginacion.appendChild(btnPrev)
+  root.appendChild(divPaginacion)
+   
+  btnNext.addEventListener("click", (e)=>{
+    contenedorCard.innerHTML = ``
+    root.innerHTML = ``
+    crearHeader()
+
+    if(e.target.textContent === "Siguiente"){
+      fetchPokemons(next)
+    }
+  })
+
+  if(previous !== null){
+    btnPrev.disabled = false
+  }
+
+  btnPrev.addEventListener("click", (e)=>{
+    contenedorCard.innerHTML = ``
+    root.innerHTML = ``
+    crearHeader()
+    if(e.target.textContent === "Anterior"){
+      fetchPokemons(previous)
+    }
+  })
 }
 
 function crearHeader(){

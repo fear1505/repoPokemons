@@ -211,6 +211,18 @@ body{
     color: #FFFFFF ;
 }
 
+.paginacion{
+    width: 100%;
+    padding: 2%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.siguiente{
+    width: 70px;
+    height: 50px;
+}
+
 .carrito{
     display: none;
     background-color: whitesmoke;
