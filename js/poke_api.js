@@ -9,7 +9,7 @@ location.hash = "#productos"
 
 let carrito = []
 document.addEventListener("DOMContentLoaded", ()=>{
-  fetchPokemons(url)
+  fetchPokemons(url) 
 })
 
 contenedorCard.addEventListener("click", e =>{
@@ -33,13 +33,12 @@ window.addEventListener("hashchange", e =>{
 
 const fetchPokemons = async (url) => {
   try{
+    loader(true)
     const res = await fetch(url)
     const data = await res.json()
-    
     let next = data.next
     const previous = data.previous
     paginacion(next, previous)
-
     data.results.forEach(item =>{
       fetch(item.url)
       .then(res => res.json())
@@ -49,6 +48,8 @@ const fetchPokemons = async (url) => {
     })
    } catch (error) {
     console.log(error)
+  } finally{
+    loader(false)
   }
 }
 
@@ -109,6 +110,17 @@ const paginacion = (next, previous) => {
       fetchPokemons(previous)
     }
   })
+}
+
+const loader = (estado) => {
+  const loading = document.querySelector(".loader")
+  if(estado){
+    console.log("ingreso if")
+    loading.classList.remove("d-none")
+  }else{
+    console.log("ingreso en el else")
+    loading.classList.add("d-none")
+  }
 }
 
 function crearHeader(){
@@ -206,7 +218,6 @@ function crearCardFrontal(pokemon, card){
       card.classList.add("active")
     }
   })
-
 }
 
 function crearCardTrasera(pokemon, card){
@@ -358,5 +369,3 @@ const btnAccion = e =>{
 }
 
 crearHeader()
-
-
