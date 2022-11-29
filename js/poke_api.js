@@ -10,6 +10,10 @@ location.hash = "#productos"
 let carrito = []
 document.addEventListener("DOMContentLoaded", ()=>{
   fetchPokemons(url) 
+  if(localStorage.getItem("productos")){
+    carrito = JSON.parse(localStorage.getItem("productos"))
+    pintarCarrito()
+  }
 })
 
 contenedorCard.addEventListener("click", e =>{
@@ -115,10 +119,8 @@ const paginacion = (next, previous) => {
 const loader = (estado) => {
   const loading = document.querySelector(".loader")
   if(estado){
-    console.log("ingreso if")
     loading.classList.remove("d-none")
   }else{
-    console.log("ingreso en el else")
     loading.classList.add("d-none")
   }
 }
@@ -141,7 +143,7 @@ function crearHeader(){
 
   let contadorCarrito = document.createElement("p")
   contadorCarrito.classList.add("header__contador")
-  contadorCarrito.textContent = "0"
+  contadorCarrito.textContent = carrito.length
   
   header.appendChild(contentLogo);
   header.appendChild(divHeader)
@@ -293,6 +295,7 @@ const setcarrito = (e) => {
 const pintarCarrito = () =>{
   const template = document.querySelector("#template-carrito").content
   document.querySelector(".header__contador").textContent = carrito.length
+  localStorage.setItem("productos", JSON.stringify(carrito))
   productos.innerHTML = ``
   
   carrito.forEach((item)=>{
